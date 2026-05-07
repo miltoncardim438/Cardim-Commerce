@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden; /* Isso mata a barra horizontal branca */
+  margin: 0;
+  padding: 0;
+  background-color: #1a1c22; /* Use a cor de fundo do seu site aqui */
+}
