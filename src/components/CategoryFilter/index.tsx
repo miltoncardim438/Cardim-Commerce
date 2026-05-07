@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { categories, type Category } from "../../types/category";
 
 interface CategoryFilterProps {
