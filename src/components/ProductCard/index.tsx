@@ -8,6 +8,8 @@ import calca from "../../assets/image-card-pants.jpg"
 import pulseira from "../../assets/image-card-bracelet.jpg"
 import { BaseCard } from "./BaseCard"
 import type { Category } from "../../types/category"
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 
 const ProdutosList: IProduct[] = [
   {
@@ -68,10 +70,15 @@ const ProdutosList: IProduct[] = [
   }
 ]
 
-export const ProductCard = ({ activeCategory }: { activeCategory: Category }) => {
-  const filteredProducts = activeCategory === "Todos"
-    ? ProdutosList
-    : ProdutosList.filter(product => product.category === activeCategory);
+export const ProductCard = ({ activeCategory }: { activeCategory: Category; }) => {
+  const { searchTerm } = useContext(CartContext);
+  
+  const filteredProducts = ProdutosList.filter(product => {
+    const matchesCategory = activeCategory === "Todos" || product.category === activeCategory;
+    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <section className="py-12">
@@ -80,6 +87,12 @@ export const ProductCard = ({ activeCategory }: { activeCategory: Category }) =>
           <BaseCard key={product.id} product={product} />
         ))}
       </div>
+
+      {filteredProducts.length === 0 && (
+        <div className="text-center text-gray-400 py-10 w-full col-span-full">
+          <p>Nenhum produto encontrado.</p>
+        </div>
+      )}
     </section>
   )
 }
