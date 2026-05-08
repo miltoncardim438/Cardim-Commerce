@@ -13,11 +13,15 @@ interface CartContextData {
   setIsOpen: (value: boolean) => void;
   totalValue: number;
   clearCart: () => void;
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
 }
 
 export const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,6 +52,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       setIsOpen, 
       totalValue,
       clearCart,
+      searchTerm,
+      setSearchTerm,
     }}>
       {children}
     </CartContext.Provider>
